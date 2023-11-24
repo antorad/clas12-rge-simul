@@ -32,8 +32,8 @@ errout_check(){
 ################################################################################################
 ############################# Hermes-like script hehe ##########################################
 ################################################################################################
-Njobs=10
-Njobsmax=10
+Njobs=3
+Njobsmax=1
 
 ################################################################################################
 ########################               Directories              ################################
@@ -53,8 +53,8 @@ out_dir_recon=/volatile/clas12/antorad/hipo_files
 ########################               Simul Specs             #################################
 ################################################################################################
 # Use    : Sets the number of events per job (#electrons)
-# Values : This is the sweet spot between quantity and performance
-Nevents=500
+# Values : This is the sweet spot between quantity and performance (500 default)
+Nevents=50
 
 # Use    : Sets the scaling of the magnetic fields
 # Values : From -1 to 1
