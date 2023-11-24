@@ -16,7 +16,7 @@ executables_check(){
     # checking executables existence
     if [[ ! -f ${dat2tuple_dir}/bin/dat2tuple || ! -f ${LEPTO_dir}/lepto.exe ]]
     then
-	echo "One of the necessary executables does not exist.
+	echo "One of the necessary executables does not exist."
 	exit 1
     fi
 }
