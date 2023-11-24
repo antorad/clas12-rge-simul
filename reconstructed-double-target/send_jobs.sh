@@ -81,6 +81,10 @@ fmt_variation=michel
 # Values : Check the beam energy on the lepto executable!
 beam_energy=11
 
+# Use    : Determine which variation of the bst shield thickness will be used
+# Values : 51, 100, 150, 200 (check in the bst-shield directory)
+bst_shield_thickness=51
+
 ################################################################################################
 ########################                SHOWTIME               #################################
 ################################################################################################
@@ -90,5 +94,5 @@ errout_check
 
 cd ${main_dir}/reconstructed-double-target
 sbatch --array=1-${Njobs}%${Njobsmax} run_full_reconstruction_fmt_cryoresize_fullD2vertex.sh \
-${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} ${out_dir_lepto} ${out_dir_recon} \
-${Nevents} ${torus} ${solenoid} ${target} ${target_variation} ${lD2_length} ${fmt_variation} ${beam_energy}
+${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} ${out_dir_lepto} ${out_dir_recon} \
+${Nevents} ${torus} ${solenoid} ${target} ${target_variation} ${lD2_length} ${fmt_variation} ${beam_energy} ${bst_shield_thickness}

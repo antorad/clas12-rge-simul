@@ -6,7 +6,8 @@
 
 	<!-- central detectors 	-->
 	<detector name="/group/clas12/gemc/4.4.2/experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
-	<detector name="/group/clas12/gemc/4.4.2/experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51"/>
+	<!-- <detector name="/group/clas12/gemc/4.4.2/experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51"/> -->
+    <detector name="MAIN_DIR/bst-shield/bstShield"   factory="TEXT" variation="wBST_SHIELD_THICKNESS"/>
 	<detector name="/group/clas12/gemc/4.4.2/experiments/clas12/micromegas/micromegas" factory="TEXT" variation="FMT_VARIATION"/>
 
 	<!--ctof, cad  -->

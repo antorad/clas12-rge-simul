@@ -59,25 +59,27 @@ AZ_assignation(){
 ###########################################################################
 ###########################     DIRECTORIES     ###########################
 ###########################################################################
-LEPTO_dir=${1} ## CHECK THIS DIRECTORY!
-execution_dir=${2}
-lepto2dat_dir=${3}
-dat2tuple_dir=${4}
-rec_utils_dir=${5}
-out_dir_lepto=${6}
-out_dir_recon=${7}
+main_dir=${1}
+LEPTO_dir=${2} ## CHECK THIS DIRECTORY!
+execution_dir=${3}
+lepto2dat_dir=${4}
+dat2tuple_dir=${5}
+rec_utils_dir=${6}
+out_dir_lepto=${7}
+out_dir_recon=${8}
 
 ###########################################################################
 ###########################      VARIABLES      ###########################
 ###########################################################################
-Nevents=${8}
-torus=${9}
-solenoid=${10}
-target=${11}
-target_variation=${12}
-lD2_length=${13}
-fmt_variation=${14}
-beam_energy=${15}
+Nevents=${9}
+torus=${10}
+solenoid=${11}
+target=${12}
+target_variation=${13}
+lD2_length=${14}
+fmt_variation=${15}
+beam_energy=${16}
+bst_shield_thickness=${17}
 
 cryotarget_variation=${lD2_length}cmlD2
 id=${target}_${cryotarget_variation}_${SLURM_ARRAY_JOB_ID}${SLURM_ARRAY_TASK_ID}
@@ -171,6 +173,8 @@ sed -i "s/SOLENOID_VALUE/${solenoid}/g" ${gcard_name}.gcard
 sed -i "s/CRYOTARGET_VARIATION/${cryotarget_variation}/g" ${gcard_name}.gcard
 sed -i "s/TARGET_VARIATION/${target_variation}/g" ${gcard_name}.gcard
 sed -i "s/FMT_VARIATION/${fmt_variation}/g" ${gcard_name}.gcard
+sed -i "s/MAIN_DIR/${main_dir}/g" ${gcard_name}.gcard
+sed -i "s/BST_SHIELD_THICKNESS/${bst_shield_thickness}/g" ${gcard_name}.gcard
 
 # EXECUTE GEMC
 gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="evio, ${gemc_out}.ev" -USE_GUI="0"
