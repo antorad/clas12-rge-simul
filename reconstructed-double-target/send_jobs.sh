@@ -16,7 +16,7 @@ executables_check(){
     # checking executables existence
     if [[ ! -f ${dat2tuple_dir}/bin/dat2tuple || ! -f ${LEPTO_dir}/lepto.exe ]]
     then
-	echo "One of the necessary executables does not exist."
+	echo "One of the necessary executables does not exist.
 	exit 1
     fi
 }
@@ -40,14 +40,14 @@ Njobsmax=10
 ################################################################################################
 cd ..
 main_dir=$(pwd)
-LEPTO_dir=~/Lepto64Sim/bin ## CHECK THIS DIRECTORY!
-execution_dir=/volatile/clas12/emolinac
+LEPTO_dir=/home/antorad/software/Lepto64Sim_emolinac/bin ## CHECK THIS DIRECTORY!
+execution_dir=/volatile/clas12/antorad
 lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
 rec_utils_dir=${main_dir}/reconstructed-double-target/utils
 
-out_dir_lepto=/volatile/clas12/emolinac/lepto_files
-out_dir_recon=/volatile/clas12/emolinac/hipo_files
+out_dir_lepto=/volatile/clas12/antorad/lepto_files
+out_dir_recon=/volatile/clas12/antorad/hipo_files
 
 ################################################################################################
 ########################               Simul Specs             #################################
