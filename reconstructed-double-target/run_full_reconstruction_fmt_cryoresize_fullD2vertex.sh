@@ -73,7 +73,7 @@ out_dir_recon=${8}
 ###########################################################################
 Nevents=${9}
 torus=${10}
-solenoid=${11}
+solenoid=${12}
 target=${12}
 target_variation=${13}
 lD2_length=${14}
@@ -144,7 +144,7 @@ echo "Running GEMC"
 if [ -z "${GEMC_DATA_DIR}" ]
 then
     source /group/clas12/packages/setup.sh
-    module load clas12
+    module load clas12/3.4
 fi
 
 gemc_out=gemc_out_${id}_${target_variation}_s${solenoid}_t${torus}_fmt${fmt_variation}
