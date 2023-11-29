@@ -73,7 +73,7 @@ out_dir_recon=${8}
 ###########################################################################
 Nevents=${9}
 torus=${10}
-solenoid=${12}
+solenoid=${11}
 target=${12}
 target_variation=${13}
 lD2_length=${14}
@@ -173,7 +173,7 @@ sed -i "s/SOLENOID_VALUE/${solenoid}/g" ${gcard_name}.gcard
 sed -i "s/CRYOTARGET_VARIATION/${cryotarget_variation}/g" ${gcard_name}.gcard
 sed -i "s/TARGET_VARIATION/${target_variation}/g" ${gcard_name}.gcard
 sed -i "s/FMT_VARIATION/${fmt_variation}/g" ${gcard_name}.gcard
-sed -i "s/MAIN_DIR/${main_dir}/g" ${gcard_name}.gcard
+#sed -i "s/MAIN_DIR/${main_dir}/g" ${gcard_name}.gcard
 sed -i "s/BST_SHIELD_THICKNESS/${bst_shield_thickness}/g" ${gcard_name}.gcard
 
 # EXECUTE GEMC
