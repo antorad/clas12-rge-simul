@@ -29,15 +29,18 @@ errout_check(){
 	mkdir ${main_dir}/reconstructed-double-target/out
     fi
 }
+
 ################################################################################################
 ############################# Hermes-like script hehe ##########################################
 ################################################################################################
-Njobs=3
-Njobsmax=1
+
+Njobs=3  
+Njobsmax=1 #For Test:1; Max Tested: 10
 
 ################################################################################################
 ########################               Directories              ################################
 ################################################################################################
+
 cd ..
 main_dir=$(pwd)
 LEPTO_dir=/home/antorad/software/Lepto64Sim_emolinac/bin ## CHECK THIS DIRECTORY!
@@ -48,6 +51,7 @@ rec_utils_dir=${main_dir}/reconstructed-double-target/utils
 
 out_dir_lepto=/volatile/clas12/antorad/lepto_files
 out_dir_recon=/volatile/clas12/antorad/hipo_files
+
 
 ################################################################################################
 ########################               Simul Specs             #################################
@@ -83,7 +87,7 @@ beam_energy=11
 
 # Use    : Determine which variation of the bst shield thickness will be used
 # Values : 51, 100, 150, 200 (check in the bst-shield directory)
-bst_shield_thickness=51
+bst_shield_thickness=200
 
 ################################################################################################
 ########################                SHOWTIME               #################################

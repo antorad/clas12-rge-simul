@@ -5,7 +5,7 @@
 #SBATCH --job-name=gemc-rec
 #SBATCH --output=/dev/null
 #SBATCH --error=./err/%x.%j.array%a.err
-#SBATCH --time=02:00:00
+#SBATCH --time=02:30:00
 #SBATCH --mem=2G
 
 #--output=./out/%x.%j.array%a.out
@@ -147,7 +147,7 @@ then
     module load clas12/3.4
 fi
 
-gemc_out=gemc_out_${id}_${target_variation}_s${solenoid}_t${torus}_fmt${fmt_variation}
+gemc_out=gemc_out_${id}_${target_variation}_s${solenoid}_t${torus}_fmt${fmt_variation}_bstsh${bst_shield_thickness}
 gcard_name=clas12_fmt_cryoresize
 
 # Transform lepto's output to LUND format
