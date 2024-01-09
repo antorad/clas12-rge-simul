@@ -29,32 +29,36 @@ errout_check(){
 	mkdir ${main_dir}/reconstructed-double-target/out
     fi
 }
+
 ################################################################################################
 ############################# Hermes-like script hehe ##########################################
 ################################################################################################
-Njobs=10
-Njobsmax=10
+
+Njobs=3  
+Njobsmax=1 #For Test:1; Max Tested: 10
 
 ################################################################################################
 ########################               Directories              ################################
 ################################################################################################
+
 cd ..
 main_dir=$(pwd)
-LEPTO_dir=~/Lepto64Sim/bin ## CHECK THIS DIRECTORY!
-execution_dir=/volatile/clas12/emolinac
+LEPTO_dir=/home/antorad/software/Lepto64Sim_emolinac/bin ## CHECK THIS DIRECTORY!
+execution_dir=/volatile/clas12/antorad
 lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
 rec_utils_dir=${main_dir}/reconstructed-double-target/utils
 
-out_dir_lepto=/volatile/clas12/emolinac/lepto_files
-out_dir_recon=/volatile/clas12/emolinac/hipo_files
+out_dir_lepto=/volatile/clas12/antorad/lepto_files
+out_dir_recon=/volatile/clas12/antorad/hipo_files
+
 
 ################################################################################################
 ########################               Simul Specs             #################################
 ################################################################################################
 # Use    : Sets the number of events per job (#electrons)
-# Values : This is the sweet spot between quantity and performance
-Nevents=500
+# Values : This is the sweet spot between quantity and performance (500 default)
+Nevents=50
 
 # Use    : Sets the scaling of the magnetic fields
 # Values : From -1 to 1
@@ -81,6 +85,10 @@ fmt_variation=michel
 # Values : Check the beam energy on the lepto executable!
 beam_energy=11
 
+# Use    : Determine which variation of the bst shield thickness will be used
+# Values : 51, 100, 150, 200 (check in the bst-shield directory)
+bst_shield_thickness=200
+
 ################################################################################################
 ########################                SHOWTIME               #################################
 ################################################################################################
@@ -90,5 +98,5 @@ errout_check
 
 cd ${main_dir}/reconstructed-double-target
 sbatch --array=1-${Njobs}%${Njobsmax} run_full_reconstruction_fmt_cryoresize_fullD2vertex.sh \
-${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} ${out_dir_lepto} ${out_dir_recon} \
-${Nevents} ${torus} ${solenoid} ${target} ${target_variation} ${lD2_length} ${fmt_variation} ${beam_energy}
+${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} ${out_dir_lepto} ${out_dir_recon} \
+${Nevents} ${torus} ${solenoid} ${target} ${target_variation} ${lD2_length} ${fmt_variation} ${beam_energy} ${bst_shield_thickness}
