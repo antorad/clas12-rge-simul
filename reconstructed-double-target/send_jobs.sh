@@ -49,8 +49,8 @@ lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
 rec_utils_dir=${main_dir}/reconstructed-double-target/utils
 
-out_dir_lepto=/volatile/clas12/antorad/lepto_files
-out_dir_recon=/volatile/clas12/antorad/hipo_files
+out_dir_lepto=/volatile/clas12/antorad/lepto_files/carbonfiber
+out_dir_recon=/volatile/clas12/antorad/hipo_files/carbonfiber
 
 
 ################################################################################################
@@ -67,7 +67,7 @@ solenoid=-1
 
 # Use    : Determine ID, vertex, and set the u/d ratio in LEPTO
 # Values : D2, C, Al, Cu, Sn, Pb
-target=C
+target=D2
 
 # Use    : Determine the dt configuration present
 # Values : lD2, eg2-X, eg2-X-lD2, where X = {C,Al,Cu,Sn,Pb}
@@ -75,7 +75,7 @@ target_variation=eg2-C-lD2
 
 # Use    : Determine the cryotarget length
 # Values : 2, 3, 5 (just the number! do not write points or things like that)
-lD2_length=3
+lD2_length=2
 
 # Use    : Determine which FMT variation will be used
 # Values : michel, slim, rgf_spring2020. FMT layers = {6,6,3}
@@ -87,7 +87,7 @@ beam_energy=11
 
 # Use    : Determine which variation of the bst shield thickness will be used
 # Values : 51, 100, 150, 200 (check in the bst-shield directory)
-bst_shield_thickness=200
+bst_shield_thickness=51
 
 ################################################################################################
 ########################                SHOWTIME               #################################
