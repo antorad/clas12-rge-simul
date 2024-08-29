@@ -34,8 +34,8 @@ errout_check(){
 ############################# Hermes-like script hehe ##########################################
 ################################################################################################
 
-Njobs=3  
-Njobsmax=1 #For Test:1; Max Tested: 10
+Njobs=100 
+Njobsmax=10 #For Test:1; Max Tested: 10
 
 ################################################################################################
 ########################               Directories              ################################
@@ -49,8 +49,8 @@ lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
 rec_utils_dir=${main_dir}/reconstructed-double-target/utils
 
-out_dir_lepto=/volatile/clas12/antorad/lepto_files
-out_dir_recon=/volatile/clas12/antorad/hipo_files
+out_dir_lepto=/volatile/clas12/antorad/lepto_files/gemc_test510_2021
+out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test510_2021
 
 
 ################################################################################################
@@ -58,7 +58,7 @@ out_dir_recon=/volatile/clas12/antorad/hipo_files
 ################################################################################################
 # Use    : Sets the number of events per job (#electrons)
 # Values : This is the sweet spot between quantity and performance (500 default)
-Nevents=50
+Nevents=500
 
 # Use    : Sets the scaling of the magnetic fields
 # Values : From -1 to 1
@@ -71,11 +71,11 @@ target=C
 
 # Use    : Determine the dt configuration present
 # Values : lD2, eg2-X, eg2-X-lD2, where X = {C,Al,Cu,Sn,Pb}
-target_variation=eg2-C-lD2
+target_variation=2cm-lD2
 
 # Use    : Determine the cryotarget length
 # Values : 2, 3, 5 (just the number! do not write points or things like that)
-lD2_length=3
+lD2_length=2
 
 # Use    : Determine which FMT variation will be used
 # Values : michel, slim, rgf_spring2020. FMT layers = {6,6,3}
@@ -87,7 +87,7 @@ beam_energy=11
 
 # Use    : Determine which variation of the bst shield thickness will be used
 # Values : 51, 100, 150, 200 (check in the bst-shield directory)
-bst_shield_thickness=200
+bst_shield_thickness=51
 
 ################################################################################################
 ########################                SHOWTIME               #################################

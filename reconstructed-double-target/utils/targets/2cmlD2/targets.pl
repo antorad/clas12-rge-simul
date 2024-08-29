@@ -36,8 +36,9 @@ require "./materials.pl";
 # sensitive geometry
 require "./geometry.pl";
 
+
 # all the scripts must be run for every configuration
-my @allConfs = ("lD2","eg2-C","eg2-C-lD2","eg2-Al","eg2-Al-lD2","eg2-Cu","eg2-Cu-lD2","eg2-Sn","eg2-Sn-lD2","eg2-Pb","eg2-Pb-lD2");
+my @allConfs = ("2cm-lD2");
 
 
 foreach my $conf ( @allConfs )
@@ -46,8 +47,7 @@ foreach my $conf ( @allConfs )
 	
 	# materials
 	materials();
-		
-	# geometry
+
 	build_targets();
 }
 

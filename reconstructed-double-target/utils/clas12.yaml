@@ -1,9 +1,14 @@
+# YAML file for simulations with nominal/default geometry
+# Uses conventional tracking and no denoising
+# Compatible with:
+# - coatjava 9.0.2 or later
+# - gemc 5.2 or later
 io-services:
   reader:
-    class: org.jlab.clas.std.services.convertors.HipoToHipoReader
+    class: org.jlab.io.clara.HipoToHipoReader
     name: HipoToHipoReader
   writer:
-    class: org.jlab.clas.std.services.convertors.HipoToHipoWriter
+    class: org.jlab.io.clara.HipoToHipoWriter
     name: HipoToHipoWriter
 services:
   - class: org.jlab.clas.swimtools.MagFieldsEngine
@@ -12,16 +17,22 @@ services:
     name: FTCAL
   - class: org.jlab.rec.ft.hodo.FTHODOEngine
     name: FTHODO
+  - class: org.jlab.rec.ft.trk.FTTRKEngine
+    name: FTTRK
   - class: org.jlab.rec.ft.FTEBEngine
     name: FTEB
-  - class: org.jlab.service.dc.DCHBEngine
+  - class: org.jlab.service.raster.RasterEngine
+    name: RASTER
+  - class: org.jlab.service.dc.DCHBClustering
+    name: DCCR
+  - class: org.jlab.service.dc.DCHBPostClusterConv
     name: DCHB
   - class: org.jlab.service.ftof.FTOFHBEngine
     name: FTOFHB
   - class: org.jlab.service.ec.ECEngine
     name: EC
-  - class: org.jlab.rec.cvt.services.CVTReconstruction
-    name: CVT
+  - class: org.jlab.rec.cvt.services.CVTEngine
+    name: CVTFP
   - class: org.jlab.service.ctof.CTOFEngine
     name: CTOF
   - class: org.jlab.service.cnd.CNDCalibrationEngine
@@ -46,33 +57,27 @@ services:
     name: EBTB
   - class: org.jlab.rec.rich.RICHEBEngine
     name: RICH
+  - class: org.jlab.service.rtpc.RTPCEngine
+    name: RTPC
+  - class: org.jlab.service.mc.TruthMatch
+    name: MC
 configuration:
-  io-services:
-    writer:
-      compression: 2
-# settings below are for GEMC, compatible with 4.3.0
+#  global:
+#    timestamp: 07/27/2023-12:00:00
+# uncomment to use bank filtering based on schema, schema path should be updated 
+# to point to the correct coatjava folder
+#  io-services:
+#    writer:
+#      schema_dir: /group/clas12/packages/clara/5.0.2_10.0.7/plugins/clas12/etc/bankdefs/hipo4/singles/dst
   services:
+# should match the field maps used in the gemc simulation
     MAGFIELDS:
       magfieldSolenoidMap: Symm_solenoid_r601_phi1_z1201_13June2018.dat
       magfieldTorusMap: Symm_torus_r2501_phi16_z251_24Apr2018.dat
-# examples of yaml settings for magfields 
-#      magfieldSolenoidShift: "0.0"
-#      magfieldTorusXShift: "0.0"
-#      magfieldTorusYShift: "0.0"
-#      magfieldTorusZShift: "0.0"
-# examples of yaml settings for DC services 
-    DCHB:
-      dcT2DFunc: "Polynomial"
-#      variation: default
-#      dcGeometryVariation: rga_spring2018
-#      dcUseSTT: "true"
-#      dcWireDistortion: "true"
-#    DCTB:
-#      variation: default
-#      dcGeometryVariation: rga_spring2018
-# example of how to set variation and timestamp for a service, uncomment to use
-#    EBTB:
-#      variation: default
-#      timestamp: 08/22/2018
+    DCCR:
+      rawBankGroup: "NODENOISE"
+    RTPC:
+      rtpcSimulation: "true"
+      
 mime-types:
   - binary/data-hipo

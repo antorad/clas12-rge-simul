@@ -1,0 +1,10 @@
+<gcard>
+       	<!-- Double-target -->
+        <!-- Variations include: "2cm-lD2"-->
+        <detector name="targets/2cmlD2/target"         factory="TEXT" variation="2cm-lD2"/>
+        <detector name="targets/2cmlD2/rge-dt/common/"           factory="CAD"/>
+
+        <!--Change solid target here by choosing a subdirectory. Possible options: C, Al, Cu, Sn, Pb, Empty-->
+        <detector name="targets/2cmlD2/rge-dt/C/"  factory="CAD"/>
+
+</gcard>
