@@ -1,22 +1,33 @@
 import sys
 import random
 
-# Extension of the cryotarget
-# z_limits[0] : 1cmlD2
-# z_limits[1] : 2cmlD2
-# z_limits[2] : 3cmlD2
-# z_limits[3] : 4cmlD2
-# z_limits[4] : 5cmlD2
-z_limits = [[-4.2,4.5],[-69.2,-50.5],[-14.2,14.5],[-19.2,19.5],[-24.2,24.5]]
+# Extension of the targets
+# z_limits: D2(2cm long), C, Al, Cu, Sn, Pb. Position in [mm]
+z_limits = [[-69.2,-50.5],[-10.74,-9.26],[-10.6,-9.4],[-10.18,-9.82],[-10.15,-9.85],[-10.07,-9.93]]
 
-variation = int(sys.argv[1])
-rdm       = float(sys.argv[2])
-target    = str(sys.argv[3])
-#print ("Variations used ",variation)
-#print ("Vertex = ",z_limits[variation-1][0] + rdm*(z_limits[variation-1][1] - z_limits[variation-1][0]))
+target = str(sys.argv[1])
 
-# print results in cm
+def randomize_vertex(target_index):
+    #set the limits of the targets based on the target index
+    min_z = z_limits[target_index][0]
+    max_z = z_limits[target_index][1]
+    #generate a random vetex value dependign on the limits of the target
+    rdm_vertex = random.uniform(min_z, max_z)
+    # print results in cm
+    print (rdm_vertex/10.)
+
+# choose the vertex depending of the target
 if target=="D2":
-    print ((z_limits[variation-1][0] + rdm*(z_limits[variation-1][1] - z_limits[variation-1][0]))/10.)
+    randomize_vertex(0)
+elif target=="C":
+    randomize_vertex(1)
+elif target=="Al":
+    randomize_vertex(2)
+elif target=="Cu":
+    randomize_vertex(3)
+elif target=="Sn":
+    randomize_vertex(4)
+elif target=="Pb":
+    randomize_vertex(5)
 else:
-    print(-1.)
+    print "Not a valid target to randomize vertex"

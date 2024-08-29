@@ -66,7 +66,7 @@ lepto2dat_dir=${4} #lepto to dat directory
 dat2tuple_dir=${5} #lepto to tuple directory
 rec_utils_dir=${6} #utils directory (with target files, gcards, yaml, etc)
 out_dir_lepto=${7} #output directory for lepto files
-out_dir_recon=${8} # output directory for hipo and root files output from recons
+out_dir_recon=${8} # output directory for hipo and root files output from recon
 
 ###########################################################################
 ###########################      VARIABLES      ###########################
@@ -75,18 +75,18 @@ Nevents=${9}
 torus=${10}
 solenoid=${11}
 target=${12}
-target_variation=${13}
-lD2_length=${14}
-fmt_variation=${15}
+#target_variation=${13}
+#lD2_length=${14}
+#fmt_variation=${15}
 beam_energy=${16}
-bst_shield_thickness=${17}
+#bst_shield_thickness=${17}
 
-cryotarget_variation=${lD2_length}cmlD2
-id=${target}_${cryotarget_variation}_${SLURM_ARRAY_JOB_ID}${SLURM_ARRAY_TASK_ID}
+#cryotarget_variation=${lD2_length}cmlD2
+id=${target}_${SLURM_ARRAY_JOB_ID}${SLURM_ARRAY_TASK_ID}
 temp_dir=${execution_dir}/${id}
 
 echo "Target variation     : ${target_variation}"
-echo "Cryotarget variation : ${cryotarget_variation}"
+#echo "Cryotarget variation : ${cryotarget_variation}"
 
 ###########################################################################
 ###########################       PREAMBLE      ###########################
