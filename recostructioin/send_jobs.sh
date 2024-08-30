@@ -94,7 +94,7 @@ executables_check
 output_directory_check
 errout_check
 
-cd ${main_dir}/reconstructed-double-target
+cd ${main_dir}/reconstruction
 sbatch --array=1-${Njobs}%${Njobsmax} run_full_simulation.sh \
 ${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} \
 ${out_dir_lepto} ${out_dir_recon} \

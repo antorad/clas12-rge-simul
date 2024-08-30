@@ -1,5 +1,5 @@
 // Constants
-const double kEbeam		= 11.;
+const double kEbeam		= 10.5473;
 const double kMassGamma		= 0.000000;
 const double kMassPositron	= 5.109998e-4;
 const double kMassElectron	= 5.109998e-4;

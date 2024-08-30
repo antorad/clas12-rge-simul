@@ -75,23 +75,16 @@ Nevents=${9}
 torus=${10}
 solenoid=${11}
 target=${12}
-#target_variation=${13}
-#lD2_length=${14}
-#fmt_variation=${15}
-beam_energy=${16}
-#bst_shield_thickness=${17}
-
-#cryotarget_variation=${lD2_length}cmlD2
-id=${target}_${SLURM_ARRAY_JOB_ID}${SLURM_ARRAY_TASK_ID}
-temp_dir=${execution_dir}/${id}
-
-echo "Target variation     : ${target_variation}"
-#echo "Cryotarget variation : ${cryotarget_variation}"
+beam_energy=${13}
 
 ###########################################################################
 ###########################       PREAMBLE      ###########################
 ###########################################################################
+#JOB id for directory and output name puposes
+id=${target}_${SLURM_ARRAY_JOB_ID}${SLURM_ARRAY_TASK_ID}
+
 # Create folder in volatile to not interfere with other lepto executions
+temp_dir=${execution_dir}/${id}
 mkdir ${temp_dir}
 cd ${temp_dir}
 
@@ -109,9 +102,8 @@ fi
 lepto_out=lepto_out_${id}
 
 # Setting the vertex
-cp ${rec_utils_dir}/*.py .
-rdm=$(python random_gen.py)
-z_vertex=$(python vertex.py ${lD2_length} ${rdm} ${target})
+cp ${rec_utils_dir}/vertex.py .
+z_vertex=$(python vertex.py ${target})
 echo "Vertex is Z = ${z_vertex}(cm)"
 
 # Copy lepto executable to temp folder
@@ -122,13 +114,16 @@ echo "Copying LEPTO to temp dir"
 AZ_assignation ${target}
 echo "${Nevents} ${A} ${Z}" > lepto_input.txt
 echo "Target assignation done!"
+
 # EXECUTE LEPTO
 ./lepto_${id}.exe < lepto_input.txt > ${lepto_out}.txt
 echo "LEPTO execution done"
+
 # Transform lepto's output to dat files
 cp ${lepto2dat_dir}/lepto2dat.pl ${temp_dir}/
 perl lepto2dat.pl ${z_vertex} < ${lepto_out}.txt > ${lepto_out}.dat
 echo "lepto2dat done"
+
 # Transform's dat files into ROOT NTuples
 echo "dat2tuple start"
 cp ${dat2tuple_dir}/bin/dat2tuple ${temp_dir}/
@@ -147,39 +142,34 @@ then
     module load clas12
 fi
 
-gemc_out=gemc_out_${id}_${target_variation}_s${solenoid}_t${torus}_fmt${fmt_variation}_bstsh${bst_shield_thickness}
-gcard_name=dt_fmt
+gemc_out=gemc_out_${id}_${target}_s${solenoid}_t${torus}
+gcard_name=rge
 
-# Transform lepto's output to LUND format
-# Yes, It is necessary to specify the same z_vertex again
-LUND_lepto_out=LUND${lepto_out}
-cp ${rec_utils_dir}/leptoLUND.pl ${temp_dir}/
-perl leptoLUND.pl ${z_vertex} ${beam_energy} < ${lepto_out}.txt > ${LUND_lepto_out}.dat
-
-# Copy the gcard you'll use into the temp folder and set the torus value
-cp ${rec_utils_dir}/${gcard_name}.gcard ${temp_dir}/
-#cp /group/clas12/gemc/4.4.2/experiments/clas12/micromegas/micromegas__bank.txt ${temp_dir}/
-
-# Copy the cryotarget model into the execution folder and 
-cp -r ${rec_utils_dir}/targets/${cryotarget_variation}/ ${temp_dir}/
-cd ${temp_dir}/${cryotarget_variation}
-#./targets.pl config.dat
-
-# Change some variables in the gcard
+# Copy the utils dir into execution dir 
+cp -r ${rec_utils_dir} ${temp_dir}/
 cd ${temp_dir}
 
+# Transform lepto's output to LUND format
+LUND_lepto_out=LUND_${lepto_out}
+perl leptoLUND.pl ${z_vertex} ${beam_energy} < ${lepto_out}.txt > ${LUND_lepto_out}.dat
+
+#./targets.pl config.dat (Not working for some reason)
+
+# Change some variables in the gcard
 sed -i "s/TORUS_VALUE/${torus}/g" ${gcard_name}.gcard
 sed -i "s/SOLENOID_VALUE/${solenoid}/g" ${gcard_name}.gcard
-sed -i "s/CRYOTARGET_VARIATION/${cryotarget_variation}/g" ${gcard_name}.gcard
-sed -i "s/TARGET_VARIATION/${target_variation}/g" ${gcard_name}.gcard
-sed -i "s/FMT_VARIATION/${fmt_variation}/g" ${gcard_name}.gcard
-#sed -i "s/MAIN_DIR/${main_dir}/g" ${gcard_name}.gcard
-sed -i "s/BST_SHIELD_THICKNESS/${bst_shield_thickness}/g" ${gcard_name}.gcard
+sed -i "s/TARGET/${target}/g" ${gcard_name}.gcard
 
 # EXECUTE GEMC
+#For GEMC 4 - EVIO format output
 #gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="evio, ${gemc_out}.ev" -USE_GUI="0"
+#For GEMC 5 - HIPO format output
 gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="hipo, ${gemc_out}.hipo" -USE_GUI="0"
-echo "GEMC execution succesful!"
+echo "GEMC execution finished!"
+
+###########################################################################
+######################       RECONSTRUCTION          ######################
+###########################################################################
 
 # Transform to HIPO
 evio2hipo -t ${torus} -s ${solenoid} -r 11 -o ${gemc_out}.hipo -i ${gemc_out}.ev
