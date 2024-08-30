@@ -165,27 +165,25 @@ sed -i "s/TARGET/${target}/g" ${gcard_name}.gcard
 #gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="evio, ${gemc_out}.ev" -USE_GUI="0"
 #For GEMC 5 - HIPO format output
 gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="hipo, ${gemc_out}.hipo" -USE_GUI="0"
-echo "GEMC execution finished!"
+echo "GEMC execution finished"
 
 ###########################################################################
 ######################       RECONSTRUCTION          ######################
 ###########################################################################
 
-# Transform to HIPO
-evio2hipo -t ${torus} -s ${solenoid} -r 11 -o ${gemc_out}.hipo -i ${gemc_out}.ev
-rm ${gemc_out}.ev
-echo "Evio 2 HIPO transformation successful"
+# Transform to HIPO (Only for GEMC 4)
+#evio2hipo -t ${torus} -s ${solenoid} -r 11 -o ${gemc_out}.hipo -i ${gemc_out}.ev
+#rm ${gemc_out}.ev
+#echo "Evio 2 HIPO transformation done"
 
 # EXECUTE RECONSTRUCTION
-cp ${rec_utils_dir}/clas12_2021.yaml ${temp_dir}/
-recon-util -y clas12_2021.yaml -i ${gemc_out}.hipo -o ${gemc_out}.rec.hipo
-echo "Reconstruction successful"
+recon-util -y clas12.yaml -i ${gemc_out}.hipo -o ${gemc_out}.rec.hipo
+echo "Reconstruction done"
 rm ${gemc_out}.hipo
 
 # Move output to its folder
 mv ${lepto_out}.txt ${lepto_out}.dat ${lepto_out}_ntuple.root ${LUND_lepto_out}.dat ${out_dir_lepto}/
 mv ${gemc_out}.rec.hipo ${out_dir_recon}/
-mv ${lepto_out}_ntuple.root ${out_dir_lepto}/
 
 # Remove folder
 rm -rf ${temp_dir}
