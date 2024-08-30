@@ -4,14 +4,27 @@
 ################################################################################################
 ########################           Checking variables          #################################
 ################################################################################################
-directories_check(){
+input_directories_check(){
     # checking execution directories
-    if [[ ! -d ${LEPTO_dir} || ! -d ${execution_dir} || ! -d ${lepto2dat_dir} || ! -d ${dat2tuple_dir} || ! -d ${rec_utils_dir} || ! -d ${out_dir_recon} || ! -d ${out_dir_lepto} ]]
+    if [[ ! -d ${LEPTO_dir} || ! -d ${lepto2dat_dir} || ! -d ${dat2tuple_dir} || ! -d ${rec_utils_dir} ]]
     then
-	echo "One of the necessary directories does not exist."
+	echo "One of the necessary input directories does not exist."
 	exit 1
     fi
 }
+
+output_directories_check(){
+    # checking execution directories
+    if [[ ! -d ${execution_dir} || ! -d ${out_dir_recon} || ! -d ${out_dir_lepto} ]]
+    then
+    echo "One of the output directories does not exist. Creating it."
+    mkdir -p ${execution_dir}
+    mkdir -p ${out_dir_recon}
+    mkdir -p ${out_dir_lepto}
+    exit 1
+    fi
+}
+
 executables_check(){
     # checking executables existence
     if [[ ! -f ${dat2tuple_dir}/bin/dat2tuple || ! -f ${LEPTO_dir}/lepto.exe ]]
@@ -25,8 +38,8 @@ errout_check(){
     if [[ ! -d ${main_dir}/reconstructed-double-target/err || ! -d ${main_dir}/reconstructed-double-target/out ]]
     then
 	echo "Making log out directories!"
-	mkdir ${main_dir}/reconstructed-double-target/err
-	mkdir ${main_dir}/reconstructed-double-target/out
+	mkdir -p ${main_dir}/reconstructed-double-target/err
+	mkdir -p ${main_dir}/reconstructed-double-target/out
     fi
 }
 
@@ -43,7 +56,7 @@ Njobsmax=10 #For Test:1; Max Tested: 10
 
 cd ..
 main_dir=$(pwd)
-LEPTO_dir=/home/antorad/software/Lepto64Sim_emolinac/bin ## CHECK THIS DIRECTORY!
+LEPTO_dir=/home/antorad/software/Lepto64/bin ## CHECK THIS DIRECTORY!
 execution_dir=/volatile/clas12/antorad
 lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
@@ -60,7 +73,7 @@ out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test510_2021
 # Values : This is the sweet spot between quantity and performance (500 default)
 Nevents=500
 
-# Use    : Sets the scaling of the magnetic fields
+# Use    : Sets the scaling of the magnetic fields (-1: full imbending; 1: full outbending)
 # Values : From -1 to 1
 torus=-1
 solenoid=-1
@@ -69,34 +82,20 @@ solenoid=-1
 # Values : D2, C, Al, Cu, Sn, Pb
 target=C
 
-# Use    : Determine the dt configuration present
-# Values : lD2, eg2-X, eg2-X-lD2, where X = {C,Al,Cu,Sn,Pb}
-target_variation=2cm-lD2
-
-# Use    : Determine the cryotarget length
-# Values : 2, 3, 5 (just the number! do not write points or things like that)
-lD2_length=2
-
-# Use    : Determine which FMT variation will be used
-# Values : michel, slim, rgf_spring2020. FMT layers = {6,6,3}
-fmt_variation=michel
-
 # Use    : Determine the beam energy to set in leptoLUND.pl
 # Values : Check the beam energy on the lepto executable!
-beam_energy=11
-
-# Use    : Determine which variation of the bst shield thickness will be used
-# Values : 51, 100, 150, 200 (check in the bst-shield directory)
-bst_shield_thickness=51
+beam_energy=10.5473
 
 ################################################################################################
 ########################                SHOWTIME               #################################
 ################################################################################################
-directories_check
+input_directories_check
 executables_check
+output_directory_check
 errout_check
 
 cd ${main_dir}/reconstructed-double-target
-sbatch --array=1-${Njobs}%${Njobsmax} run_full_reconstruction_fmt_cryoresize_fullD2vertex.sh \
-${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} ${out_dir_lepto} ${out_dir_recon} \
-${Nevents} ${torus} ${solenoid} ${target} ${target_variation} ${lD2_length} ${fmt_variation} ${beam_energy} ${bst_shield_thickness}
+sbatch --array=1-${Njobs}%${Njobsmax} run_full_simulation.sh \
+${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} \
+${out_dir_lepto} ${out_dir_recon} \
+${Nevents} ${torus} ${solenoid} ${target} ${beam_energy}
