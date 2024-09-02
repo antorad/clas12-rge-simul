@@ -22,14 +22,17 @@ The whole workflow consist in three major parts:
        2. In bin folder: *./dat2tuple <input_file_name> <output_file_name>*
 - **dat2root** : root macro to convert .dat output to raw root file.
     - *usage* : root dat2root
- **lepto** : Particle generator. check its own README in Lepto64 subdirectory.
+- **lepto** : Particle generator. check its own README in Lepto64 subdirectory.
 
 ### Notes
 - To modify beam energy, it has to changed in:
   - clas12-rge-simul/thrown/dat2tuple/include/constants.h
   - clas12-rge-simul/thrown/Lepto64/src_f/qp1.f
 
-## Reconstruction (GEMC)
+## CLAS12 Simulation (GEMC)
+W.I.P.
+
+## Recosntruction
 W.I.P.
 
 ## Quick notes!
