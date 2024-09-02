@@ -88,16 +88,19 @@ temp_dir=${execution_dir}/${id}
 mkdir ${temp_dir}
 cd ${temp_dir}
 
+# If GEMC is not loaded, load clas12 modules
+echo "Running GEMC"
+if [ -z "${GEMC_DATA_DIR}" ]
+then
+    module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
+    module load clas12
+fi
+
 ###########################################################################
 ###########################       LEPTO         ###########################
 ###########################################################################
 
 echo "Running LEPTO"
-# Prereqs setting
-if [ -z "${CERN}" ]
-then
-    source ~/software/env_scripts/set_all.sh
-fi
 
 lepto_out=lepto_out_${id}
 
@@ -133,14 +136,6 @@ echo "Finished LEPTO"
 ###########################################################################
 ###########################       GEMC          ###########################
 ###########################################################################
-
-# Prereqs setting
-echo "Running GEMC"
-if [ -z "${GEMC_DATA_DIR}" ]
-then
-    module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
-    module load clas12
-fi
 
 gemc_out=gemc_out_${id}_${target}_s${solenoid}_t${torus}
 gcard_name=rge
