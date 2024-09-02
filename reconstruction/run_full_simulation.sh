@@ -141,7 +141,7 @@ gemc_out=gemc_out_${id}_${target}_s${solenoid}_t${torus}
 gcard_name=rge
 
 # Copy the utils dir into execution dir 
-cp -r ${rec_utils_dir} ${temp_dir}/
+cp -r ${rec_utils_dir}/* ${temp_dir}/
 cd ${temp_dir}
 
 # Transform lepto's output to LUND format

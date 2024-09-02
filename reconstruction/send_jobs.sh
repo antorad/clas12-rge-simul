@@ -62,8 +62,8 @@ lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
 rec_utils_dir=${main_dir}/reconstruction/utils
 
-out_dir_lepto=/volatile/clas12/antorad/lepto_files/gemc_test510_2021
-out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test510_2021
+out_dir_lepto=/volatile/clas12/antorad/lepto_files/gemc_test
+out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test
 
 
 ################################################################################################
