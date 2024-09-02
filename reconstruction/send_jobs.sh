@@ -21,7 +21,6 @@ output_directories_check(){
     mkdir -p ${execution_dir}
     mkdir -p ${out_dir_recon}
     mkdir -p ${out_dir_lepto}
-    exit 1
     fi
 }
 
