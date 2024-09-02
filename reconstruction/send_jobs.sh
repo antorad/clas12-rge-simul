@@ -35,11 +35,11 @@ executables_check(){
 }
 errout_check(){
     # checking execution directories
-    if [[ ! -d ${main_dir}/reconstructed-double-target/err || ! -d ${main_dir}/reconstructed-double-target/out ]]
+    if [[ ! -d ${main_dir}/reconstruction/err || ! -d ${main_dir}/reconstruction/out ]]
     then
 	echo "Making log out directories!"
-	mkdir -p ${main_dir}/reconstructed-double-target/err
-	mkdir -p ${main_dir}/reconstructed-double-target/out
+	mkdir -p ${main_dir}/reconstruction/err
+	mkdir -p ${main_dir}/reconstruction/out
     fi
 }
 
@@ -56,11 +56,11 @@ Njobsmax=10 #For Test:1; Max Tested: 10
 
 cd ..
 main_dir=$(pwd)
-LEPTO_dir=/home/antorad/software/Lepto64/bin ## CHECK THIS DIRECTORY!
+LEPTO_dir=${main_dir}/thrown/Lepto64/bin ## CHECK THIS DIRECTORY!
 execution_dir=/volatile/clas12/antorad
 lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
-rec_utils_dir=${main_dir}/reconstructed-double-target/utils
+rec_utils_dir=${main_dir}/reconstruction/utils
 
 out_dir_lepto=/volatile/clas12/antorad/lepto_files/gemc_test510_2021
 out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test510_2021
@@ -91,7 +91,7 @@ beam_energy=10.5473
 ################################################################################################
 input_directories_check
 executables_check
-output_directory_check
+output_directories_check
 errout_check
 
 cd ${main_dir}/reconstruction

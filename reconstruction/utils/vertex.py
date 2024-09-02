@@ -30,4 +30,4 @@ elif target=="Sn":
 elif target=="Pb":
     randomize_vertex(5)
 else:
-    print "Not a valid target to randomize vertex"
+    print ("Not a valid target to randomize vertex")
