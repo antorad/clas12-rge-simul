@@ -144,10 +144,11 @@ echo "Finished LEPTO"
 ###########################################################################
 
 gemc_out=gemc_out_${id}_${target}_s${solenoid}_t${torus}
-gcard_name=/u/scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rge_spring2024_LD2-${target}-${type}
+setup_name=rge_spring2024_LD2-${target}-${type}
+gcard_name=/u/scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/${setup_name}.gcard
 
 # Copy leptoLUND into execution dir 
-cp ${main_dir}/leptoLUND.pl ${temp_dir}/
+cp ${main_dir}/thrown/leptoLUND.pl ${temp_dir}/
 cd ${temp_dir}
 
 # Transform lepto's output to LUND format
@@ -157,11 +158,11 @@ perl leptoLUND.pl 0 ${beam_energy} < ${lepto_out}.txt > ${LUND_lepto_out}.dat
 #./targets.pl config.dat (Not working for some reason)
 
 # Change some variables in the gcard
-#sed -i "s/TORUS_VALUE/${torus}/g" ${gcard_name}.gcard
-#sed -i "s/SOLENOID_VALUE/${solenoid}/g" ${gcard_name}.gcard
+#sed -i "s/TORUS_VALUE/${torus}/g" ${gcard_name}
+#sed -i "s/SOLENOID_VALUE/${solenoid}/g" ${gcard_name}
 
 # EXECUTE GEMC 5
-gemc ${gcard_name}.gcard -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="hipo, ${gemc_out}.hipo" -USE_GUI="0" -RANDOMIZE_LUND_VZ=${vertex}
+gemc ${gcard_name} -INPUT_GEN_FILE="LUND, ${LUND_lepto_out}.dat" -OUTPUT="hipo, ${gemc_out}.hipo" -USE_GUI="0" -RANDOMIZE_LUND_VZ="${vertex}"
 echo "GEMC execution finished"
 
 ###########################################################################
@@ -169,8 +170,8 @@ echo "GEMC execution finished"
 ###########################################################################
 
 # EXECUTE RECONSTRUCTION
-yaml_name=/u/scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/coatjava/10.1.1/${gcard_name}.yaml
-recon-util -y ${yaml_name}.yaml -i ${gemc_out}.hipo -o ${gemc_out}_rec.hipo
+yaml_name=/u/scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/coatjava/10.1.1/${setup_name}.yaml
+recon-util -y ${yaml_name} -i ${gemc_out}.hipo -o ${gemc_out}_rec.hipo
 echo "Reconstruction done"
 
 ###########################################################################
