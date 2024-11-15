@@ -6,7 +6,7 @@
 ################################################################################################
 input_directories_check(){
     # checking execution directories
-    if [[ ! -d ${LEPTO_dir} || ! -d ${lepto2dat_dir} || ! -d ${dat2tuple_dir} || ! -d ${rec_utils_dir} ]]
+    if [[ ! -d ${LEPTO_dir} || ! -d ${lepto2dat_dir} || ! -d ${dat2tuple_dir} ]]
     then
 	echo "One of the necessary input directories does not exist."
 	exit 1
@@ -46,8 +46,8 @@ errout_check(){
 ############################# Hermes-like script hehe ##########################################
 ################################################################################################
 
-Njobs=100 
-Njobsmax=10 #For Test:1; Max Tested: 10
+Njobs=100 #Total number of jobs to send
+Njobsmax=10 #Max number of jobs running at the same time, For Test:1; Max Tested: 10
 
 ################################################################################################
 ########################               Directories              ################################
@@ -59,10 +59,9 @@ LEPTO_dir=${main_dir}/thrown/Lepto64/bin ## CHECK THIS DIRECTORY!
 execution_dir=/volatile/clas12/antorad
 lepto2dat_dir=${main_dir}/thrown/lepto2dat
 dat2tuple_dir=${main_dir}/thrown/dat2tuple
-rec_utils_dir=${main_dir}/reconstruction/utils
 
-out_dir_lepto=/volatile/clas12/antorad/lepto_files/gemc_test
-out_dir_recon=/volatile/clas12/antorad/hipo_files/gemc_test
+out_dir_lepto=/volatile/clas12/antorad/lepto_files/simul_test
+out_dir_recon=/volatile/clas12/antorad/hipo_files/simul_test
 
 
 ################################################################################################
@@ -95,6 +94,6 @@ errout_check
 
 cd ${main_dir}/reconstruction
 sbatch --array=1-${Njobs}%${Njobsmax} run_full_simulation.sh \
-${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} ${rec_utils_dir} \
+${main_dir} ${LEPTO_dir} ${execution_dir} ${lepto2dat_dir} ${dat2tuple_dir} \
 ${out_dir_lepto} ${out_dir_recon} \
 ${Nevents} ${torus} ${solenoid} ${target} ${beam_energy}
