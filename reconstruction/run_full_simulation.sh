@@ -146,8 +146,8 @@ echo "Finished LEPTO"
 gemc_out=gemc_out_${id}_${target}_s${solenoid}_t${torus}
 gcard_name=/u/scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rge_spring2024_LD2-${target}-${type}
 
-# Copy the utils dir into execution dir 
-cp -r ${rec_utils_dir}/* ${temp_dir}/
+# Copy leptoLUND into execution dir 
+cp ${main_dir}/leptoLUND.pl ${temp_dir}/
 cd ${temp_dir}
 
 # Transform lepto's output to LUND format
